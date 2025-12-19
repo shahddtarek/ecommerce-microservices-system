@@ -4,63 +4,99 @@ import requests
 
 app = Flask(__name__)
 
+INVENTORY_SERVICE_URL = "http://localhost:5002/api/inventory/check"
 
 @app.route('/api/pricing/calculate', methods=['POST'])
 def calculate_price():
-    data = request.get_json()
-    products = data['products']
+    try:
+        data = request.get_json()
 
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+        if not data or 'products' not in data:
+            return jsonify({
+                "status": "error",
+                "message": "Products list is required"
+            }), 400
 
-    total = 0
-    items = []
+        products = data['products']
 
-    for item in products:
-        product_id = item['product_id']
-        quantity = int(item['quantity'])
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
 
-        # 1️⃣ base price من Inventory Service
-        inv_res = requests.get(
-            f"http://localhost:5002/api/inventory/check/{product_id}"
+        total = 0
+        items = []
+
+        for item in products:
+            product_id = int(item['product_id'])
+            quantity = int(item['quantity'])
+
+            # 1️⃣ Base price from Inventory Service
+            inv_res = requests.get(f"{INVENTORY_SERVICE_URL}/{product_id}")
+
+            if inv_res.status_code != 200:
+                return jsonify({
+                    "status": "error",
+                    "message": f"Product {product_id} not found in inventory"
+                }), 404
+
+            product = inv_res.json()
+            unit_price = float(product['unit_price'])
+
+            subtotal = unit_price * quantity
+
+
+            cursor.execute("""
+                SELECT discount_percentage
+                FROM pricing_rules
+                WHERE product_id = %s AND min_quantity <= %s
+                ORDER BY min_quantity DESC
+                LIMIT 1
+            """, (product_id, quantity))
+
+            rule = cursor.fetchone()
+            discount = float(rule['discount_percentage']) if rule else 0.0
+
+            discount_amount = subtotal * (discount / 100)
+            price_after_discount = subtotal - discount_amount
+
+            total += price_after_discount
+
+            items.append({
+                "product_id": product_id,
+                "unit_price": unit_price,
+                "quantity": quantity,
+                "discount_percentage": discount,
+                "final_price": price_after_discount
+            })
+
+
+        cursor.execute(
+            "SELECT tax_rate FROM tax_rates WHERE region = %s",
+            ("default",)
         )
-        product = inv_res.json()
-        unit_price = float(product['unit_price'])
+        tax = cursor.fetchone()
+        tax_rate = float(tax['tax_rate']) if tax else 0.0
 
-        subtotal = unit_price * quantity
+        tax_amount = total * (tax_rate / 100)
+        grand_total = total + tax_amount
 
-        # 2️⃣ discount من database
-        cursor.execute("""
-            SELECT discount_percentage
-            FROM pricing_rules
-            WHERE product_id = %s AND min_quantity <= %s
-            ORDER BY min_quantity DESC
-            LIMIT 1
-        """, (product_id, quantity))
+        cursor.close()
+        conn.close()
 
-        rule = cursor.fetchone()
-        discount = rule['discount_percentage'] if rule else 0
+        return jsonify({
+            "status": "success",
+            "items": items,
+            "subtotal": total,
+            "tax_rate": tax_rate,
+            "tax_amount": tax_amount,
+            "total_amount": grand_total
+        }), 200
 
-        discount_amount = subtotal * (discount / 100)
-        final_price = subtotal - discount_amount
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 400
 
-        total += final_price
-
-        items.append({
-            "product_id": product_id,
-            "unit_price": unit_price,
-            "quantity": quantity,
-            "discount": discount,
-            "final_price": final_price
-        })
-
-    cursor.close()
-    conn.close()
-
-    return jsonify({
-        "items": items,
-        "total_amount": total
-    })
 
 if __name__ == '__main__':
-    app.run(port=5003)
+    app.run(port=5003, debug=True)
