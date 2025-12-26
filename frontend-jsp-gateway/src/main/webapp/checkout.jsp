@@ -1,84 +1,67 @@
-<%-- 
-    Document   : checkout
-    Created on : Nov 26, 2025
---%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="org.json.JSONArray, org.json.JSONObject" %>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Checkout</title>
-
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-        }
-
-        .container {
-            width: 400px;
-            margin: 60px auto;
-            background: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            text-align: center;
-            color: #2E8B57;
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            margin-top: 20px;
-            width: 100%;
-            padding: 10px;
-            background-color: #2E8B57;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #246b45;
-        }
+        table { border-collapse: collapse; width: 70%; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+        th { background-color: #eee; }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <h2>Checkout</h2>
 
-        <form action="submitOrder" method="post">
-            <label>Customer ID</label>
-            <input type="text" name="customer_id">
+<h2>Checkout</h2>
 
-            <label>Product ID</label>
-            <input type="text" name="product_id">
+<%
+    String pricingJson = (String) request.getAttribute("pricingResult");
+    JSONArray products = (JSONArray) request.getAttribute("products");
+    String customerId = (String) request.getAttribute("customer_id");
 
-            <label>Quantity</label>
-            <input type="text" name="quantity">
+    JSONObject pricing = new JSONObject(pricingJson);
+    JSONArray items = pricing.getJSONArray("items");
+    double totalAmount = pricing.getDouble("total_amount");
+%>
 
-            <input type="submit" value="Submit Order">
-        </form>
-    </div>
+<table>
+<tr>
+    <th>Product ID</th>
+    <th>Quantity</th>
+    <th>Unit Price</th>
+    <th>Final Price</th>
+</tr>
+
+<%
+for (int i = 0; i < items.length(); i++) {
+    JSONObject item = items.getJSONObject(i);
+%>
+<tr>
+    <td><%= item.getInt("product_id") %></td>
+    <td><%= item.getInt("quantity") %></td>
+    <td>$<%= item.getDouble("unit_price") %></td>
+    <td>$<%= item.getDouble("final_price") %></td>
+</tr>
+<%
+}
+%>
+
+</table>
+
+<h3>Total Amount: $<%= totalAmount %></h3>
+
+<form action="submitOrder" method="post">
+    <input type="hidden" name="customer_id" value="<%= customerId %>">
+    <input type="hidden" name="products" value='<%= products.toString() %>'>
+    <input type="hidden" name="total_amount" value="<%= totalAmount %>">
+    <input type="submit" value="submit Order">
+</form>
+
+<br>
+
+<form action="products" method="get">
+    <input type="submit" value="Cancel">
+</form>
+
 </body>
 </html>

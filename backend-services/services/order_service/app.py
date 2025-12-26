@@ -1,75 +1,104 @@
 from flask import Flask, request, jsonify
 from datetime import datetime
+from common.db import get_db_connection
 import uuid
 
 app = Flask(__name__)
 
-ORDERS = {}
+
 
 @app.route('/api/orders/create', methods=['POST'])
 def create_order():
+    data = request.get_json()
+
+    customer_id = data.get('customer_id')
+    products = data.get('products')
+    total_amount = data.get('total_amount')
+    order_items_details = []
+
+    if not customer_id or not products:
+        return jsonify({"error": "Invalid order data"}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
     try:
-        data = request.get_json()
+        cursor.execute(
+            "INSERT INTO orders (customer_id, total_amount) VALUES (%s, %s)",
+            (customer_id, total_amount)
+        )
+        order_id = cursor.lastrowid
 
-        if not data:
-            raise ValueError("JSON body is missing")
+        for item in products:
+            p_id = item.get('product_id')
+            qty = item.get('quantity')
 
-        customer_id = int(data['customer_id'])
-        products = data['products']
-        total_amount = float(data.get('total_amount', 0))
+            cursor.execute("SELECT product_name, unit_price FROM inventory WHERE product_id = %s", (p_id,))
+            result = cursor.fetchone()
 
-        if not isinstance(products, list) or len(products) == 0:
-            raise ValueError("Products list is required")
+            if result:
+                actual_price = result['unit_price']
+                name = result['product_name']
+                
+                cursor.execute(
+                    """
+                    INSERT INTO order_items (order_id, product_id, quantity, price)
+                    VALUES (%s, %s, %s, %s)
+                    """,
+                    (order_id, p_id, qty, actual_price)
+                )
+                order_items_details.append({
+                "product_name": name,
+                "quantity": qty,
+                "price": float(actual_price)
+            })
+            else:
+                print(f"Warning: Product {p_id} not found in inventory!")
 
-        for product in products:
-            product_id = int(product['product_id'])
-            quantity = int(product['quantity'])
-
-            if quantity <= 0:
-                raise ValueError("Quantity must be greater than zero")
-
-        order_id = str(uuid.uuid4())
-        timestamp = datetime.now().isoformat()
-
-        return jsonify({
-            "status": "success",
-            "order_id": order_id,
-            "customer_id": customer_id,
-            "products": products,
-            "total_amount": total_amount,
-            "timestamp": timestamp
-        }), 200
-
-    except KeyError as e:
-        return jsonify({
-            "status": "error",
-            "message": f"Missing parameter: {str(e)}"
-        }), 400
-
-    except ValueError as e:
-        return jsonify({
-            "status": "error",
-            "message": str(e)
-        }), 400
+        conn.commit()
+        return jsonify({"status": "success",
+                         "order_id": order_id,
+                         "items": order_items_details 
+                         }), 201
 
     except Exception as e:
-        return jsonify({
-            "status": "error",
-            "message": "Invalid request"
-        }), 400
-
-
-@app.route('/api/orders/<order_id>', methods=['GET'])
+        conn.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        cursor.close()
+        conn.close()
+        
+@app.route('/api/orders/<int:order_id>', methods=['GET'])
 def get_order(order_id):
-    order = ORDERS.get(order_id)
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute(
+        "SELECT * FROM orders WHERE order_id = %s",
+        (order_id,)
+    )
+    order = cursor.fetchone()
 
     if not order:
-        return jsonify({
-            "status": "error",
-            "message": "Order not found"
-        }), 404
+        return jsonify({"error": "Order not found"}), 404
 
-    return jsonify(order), 200
+    cursor.execute(
+        "SELECT product_id, quantity, price FROM order_items WHERE order_id = %s",
+        (order_id,)
+    )
+    items = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({
+        "order_id": order['order_id'],
+        "customer_id": order['customer_id'],
+        "total_amount": float(order['total_amount']),
+        "status": order['status'],
+        "created_at": str(order['created_at']),
+        "items": items
+    })
 
 
 if __name__ == '__main__':
