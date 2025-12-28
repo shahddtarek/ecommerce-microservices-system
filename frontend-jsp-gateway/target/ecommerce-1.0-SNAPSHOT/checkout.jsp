@@ -151,6 +151,11 @@
             <input type="hidden" name="total_amount" value="<%= String.format("%.2f", totalAmount) %>">
             <input type="submit" value="Submit Order">
         </form>
+        <form action="products" method="get">
+            <input type="hidden" name="customer_id" value="<%= customerId %>">
+            <input type="submit" value="Cancel" class="cancel-btn">
+        </form>
+
     </div>
 </div>
 </body>

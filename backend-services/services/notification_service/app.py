@@ -52,7 +52,10 @@ def send_notification():
 
     return jsonify({
         "status": "success",
-        "message": "Notification sent and logged"
+        "message": "Notification sent and logged",
+        "email_sent_to": customer['email'],
+        "subject": "Order Confirmed",
+        "body": message
     })
 
 

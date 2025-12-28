@@ -96,10 +96,24 @@ public class OrderServlet extends HttpServlet {
                 .POST(HttpRequest.BodyPublishers.ofString(notificationPayload))
                 .build();
         
-//       HttpResponse<String> notificationRes =
-//                    client.send(notificationRequest, HttpResponse.BodyHandlers.ofString());
-//
-//            System.out.println("Notification Response: " + notificationRes.body());
+        try {
+        // إرسال الطلب واستقبال الرد
+                HttpResponse<String> notificationRes = 
+                        client.send(notificationRequest, HttpResponse.BodyHandlers.ofString());
+
+                // طباعة الرد في الكونسول
+                System.out.println("====================================");
+                System.out.println("Notification Service Response:");
+                System.out.println("Status Code: " + notificationRes.statusCode());
+                System.out.println("Response Body: " + notificationRes.body());
+                System.out.println("====================================");
+
+            } catch (InterruptedException e) {
+                System.err.println("Error sending notification: " + e.getMessage());
+                Thread.currentThread().interrupt(); // إعادة تعيين حالة المقاطعة
+            } catch (IOException e) {
+                System.err.println("Network error calling Notification Service: " + e.getMessage());
+            }
 
 
 
