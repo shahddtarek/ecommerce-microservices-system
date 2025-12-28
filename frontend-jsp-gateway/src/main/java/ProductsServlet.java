@@ -32,9 +32,9 @@ public class ProductsServlet extends HttpServlet {
 
             JSONArray products = new JSONArray(httpResponse.body());
 
-
+        String customerId = request.getParameter("customer_id");
             request.setAttribute("products", products);
-
+            request.setAttribute("customerId", customerId);
             request.getRequestDispatcher("index.jsp")
                    .forward(request, response);
 

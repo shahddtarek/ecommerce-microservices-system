@@ -74,6 +74,7 @@ public class OrderServlet extends HttpServlet {
                 .header("Content-Type", "application/json")
                 .PUT(HttpRequest.BodyPublishers.ofString(loyaltyPayload))
                 .build();
+        
 
         try {
             client.send(loyaltyRequest, HttpResponse.BodyHandlers.ofString());
@@ -94,6 +95,13 @@ public class OrderServlet extends HttpServlet {
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(notificationPayload))
                 .build();
+        
+//       HttpResponse<String> notificationRes =
+//                    client.send(notificationRequest, HttpResponse.BodyHandlers.ofString());
+//
+//            System.out.println("Notification Response: " + notificationRes.body());
+
+
 
         try {
             client.send(notificationRequest, HttpResponse.BodyHandlers.ofString());
@@ -109,6 +117,7 @@ public class OrderServlet extends HttpServlet {
         request.setAttribute("totalAmount", totalAmount);
         request.setAttribute("loyaltyPoints", loyaltyPoints);
         request.setAttribute("itemsList", itemsList); 
+        request.setAttribute("customerId",customerId);
 
         request.getRequestDispatcher("confirmation.jsp").forward(request, response);
     }

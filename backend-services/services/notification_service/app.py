@@ -23,14 +23,14 @@ def send_notification():
     inventory = inventory_res.json()
 
     message = (
-        f"Order #{order_id} confirmed.\n"
+        
         f"Product: {inventory['product_name']}\n"
         f"Estimated Delivery: 3 days"
     )
 
 
     print(f"EMAIL SENT TO: {customer['email']}")
-    print(f"Subject: Order #{order_id} Confirmed")
+    print(f"Subject: Order Confirmed")
     print(f"Body: {message}")
 
     # 5️⃣ Log to database

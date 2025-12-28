@@ -1,4 +1,8 @@
+OrderHistoryServlet.class
+ProfileServlet.class
 com\mycompany\project1\resources\JakartaEE10Resource.class
-TestconnectionServlet.class
+CheckOrderServlet.class
 OrderServlet.class
+ProductsServlet.class
 com\mycompany\project1\JakartaRestConfiguration.class
+CustomersServlet.class

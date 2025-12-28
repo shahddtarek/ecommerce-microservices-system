@@ -2,8 +2,11 @@ from flask import Flask, request, jsonify
 from datetime import datetime
 from common.db import get_db_connection
 import uuid
+import requests
+
 
 app = Flask(__name__)
+
 
 
 
@@ -15,6 +18,7 @@ def create_order():
     products = data.get('products')
     total_amount = data.get('total_amount')
     order_items_details = []
+    total_amount = round(total_amount, 2)
 
     if not customer_id or not products:
         return jsonify({"error": "Invalid order data"}), 400
@@ -33,13 +37,16 @@ def create_order():
             p_id = item.get('product_id')
             qty = item.get('quantity')
 
-            cursor.execute("SELECT product_name, unit_price FROM inventory WHERE product_id = %s", (p_id,))
+            cursor.execute(
+                "SELECT product_name, unit_price FROM inventory WHERE product_id = %s",
+                (p_id,)
+            )
             result = cursor.fetchone()
 
             if result:
                 actual_price = result['unit_price']
                 name = result['product_name']
-                
+
                 cursor.execute(
                     """
                     INSERT INTO order_items (order_id, product_id, quantity, price)
@@ -47,27 +54,39 @@ def create_order():
                     """,
                     (order_id, p_id, qty, actual_price)
                 )
+
                 order_items_details.append({
-                "product_name": name,
-                "quantity": qty,
-                "price": float(actual_price)
-            })
+                    "product_name": name,
+                    "quantity": qty,
+                    "price": float(actual_price)
+                })
             else:
-                print(f"Warning: Product {p_id} not found in inventory!")
+                return jsonify({"error": f"Product {p_id} not found"}), 404
+
+        inventory_response = requests.put(
+            "http://localhost:5002/api/inventory/update",
+            json={"products": products}
+        )
+
+        if inventory_response.status_code != 200:
+            raise Exception("Inventory update failed")
 
         conn.commit()
-        return jsonify({"status": "success",
-                         "order_id": order_id,
-                         "items": order_items_details 
-                         }), 201
+
+        return jsonify({
+            "status": "success",
+            "order_id": order_id,
+            "items": order_items_details
+        }), 201
 
     except Exception as e:
         conn.rollback()
         return jsonify({"error": str(e)}), 500
+
     finally:
         cursor.close()
         conn.close()
-        
+
 @app.route('/api/orders/<int:order_id>', methods=['GET'])
 def get_order(order_id):
     conn = get_db_connection()

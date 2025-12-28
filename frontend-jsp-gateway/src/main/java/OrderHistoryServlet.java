@@ -56,9 +56,9 @@ public class OrderHistoryServlet extends HttpServlet {
                     return b.getString("created_at").compareTo(a.getString("created_at"));
                 });
 
-                /* =========================
-                   3️⃣ Forward to JSP
-                ========================= */
+
+                int customerId = Integer.parseInt(customerIdParam);
+                request.setAttribute("customerId", customerId);
                 request.setAttribute("orders", list);
                 request.getRequestDispatcher("orders.jsp").forward(request, response);
                 

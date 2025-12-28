@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="50e92a16-5d04-482e-b66d-749c1ac4949c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Team members.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../Team members.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend-services/services/customer_service/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend-services/services/customer_service/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend-services/services/notification_service/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend-services/services/notification_service/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend-services/services/order_service/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend-services/services/order_service/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CheckOrderServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CheckOrderServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OrderHistoryServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OrderHistoryServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ProductsServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ProductsServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ProfileServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ProfileServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TestconnectionServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/checkout.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/checkout.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/confirmation.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/confirmation.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/orders.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/orders.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/profile.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/profile.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/CheckOrderServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/CheckOrderServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OrderHistoryServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OrderHistoryServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OrderServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OrderServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ProductsServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ProductsServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ProfileServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ProfileServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TestconnectionServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/WEB-INF/classes/CheckOrderServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/WEB-INF/classes/CheckOrderServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/WEB-INF/classes/OrderHistoryServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/WEB-INF/classes/OrderHistoryServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/WEB-INF/classes/OrderServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/WEB-INF/classes/OrderServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/WEB-INF/classes/ProductsServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/WEB-INF/classes/ProductsServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/WEB-INF/classes/ProfileServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/WEB-INF/classes/ProfileServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/checkout.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/checkout.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/confirmation.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/confirmation.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/orders.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/orders.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/profile.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/ecommerce-1.0-SNAPSHOT/profile.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="37Rz1bsTSyu0pfvvv9Y5EcOAjxL" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/ecommerce-microservices-system/frontend-jsp-gateway",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="50e92a16-5d04-482e-b66d-749c1ac4949c" name="Changes" comment="" />
+      <created>1766880459603</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1766880459603</updated>
+      <workItem from="1766880460556" duration="80000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

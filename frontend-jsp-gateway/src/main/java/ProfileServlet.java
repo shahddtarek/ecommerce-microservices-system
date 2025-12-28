@@ -33,7 +33,7 @@ public class ProfileServlet extends HttpServlet {
         } catch (InterruptedException e) {
             throw new ServletException(e);
         }
-
+        request.setAttribute("customerId", customerId);
         request.setAttribute("profileData", profileResponse.body());
         request.getRequestDispatcher("profile.jsp")
                 .forward(request, response);

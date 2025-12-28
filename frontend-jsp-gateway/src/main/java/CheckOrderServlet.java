@@ -58,7 +58,7 @@ public class CheckOrderServlet extends HttpServlet {
                     return;
                 }
 
-                // 2️⃣ Prepare pricing payload
+                
                 JSONObject item = new JSONObject();
                 item.put("product_id", Integer.parseInt(pid));
                 item.put("quantity", quantity);
@@ -79,7 +79,7 @@ public class CheckOrderServlet extends HttpServlet {
             HttpResponse<String> pricingRes =
                     client.send(pricingReq, HttpResponse.BodyHandlers.ofString());
 
-            // 4️⃣ Forward to checkout.jsp
+            
             request.setAttribute("pricingResult", pricingRes.body());
             request.setAttribute("products", productsForPricing);
             request.setAttribute("customer_id", customerId);

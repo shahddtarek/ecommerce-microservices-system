@@ -91,6 +91,29 @@ def update_loyalty(customer_id):
         "added_points": points
     })
 
+@app.route('/api/customers', methods=['GET'])
+def get_all_customers():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT customer_id
+        FROM customers
+        ORDER BY customer_id
+    """)
+
+    customers = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({
+        "customers": [
+            {
+                "customer_id": c[0]
+            } for c in customers
+        ]
+    }), 200
 
 if __name__ == '__main__':
     app.run(port=5004)
